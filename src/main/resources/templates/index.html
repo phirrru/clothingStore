@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Каталог</title>
+        <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <!--    <link rel="stylesheet" href="elib\src\main\resources\static\style.css">-->
+        <link th:href="@{css/style.css}" rel="stylesheet" />
+    </head>
+<body>
+<div th:insert="blocks/general.html :: header0">
+</div>
+
+
+
+<!--<div>-->
+<!--    <form th:action="@{/logout}" method="post">-->
+<!--        <input type="submit" value="Разлогиниться"/>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<a th:href="@{/user}">Список пользователей (ADMIN only)</a><br>-->
+
+<!--<a th:href="@{/user/profile}">Профиль</a>-->
+
+<!--<a th:if="(${authority}=='[ADMIN]')" th:href="@{/add}">Добавить книгу (ADMIN only)</a>-->
+
+<!--<form th:if="(${authority}=='[ADMIN]')" th:action="@{/add}">-->
+<!--    <input type="submit" value="Добавить вещь"/>-->
+<!--</form>-->
+
+<!--<p th:text="${authority}"/>-->
+<!--<p th:if="(${authority}=='[ADMIN]')" th:text="${authority}"/>-->
+<div id="type_names">
+<p><a th:href="@{/}" class="sample">Все варианты</a></p>
+<p th:each="type : ${types}"><a th:href="@{/(typeId=${type.getId()})}" th:text="${type.getName()}" class="sample">TEXT</a></p>
+</div>
+    <div class="item_container">
+    <div th:each="el : ${clothes}" class="item_card">
+        <img th:src="${el.coverLink}" onerror="this.src='img/no-cover.gif'" height="300px" width="200px">
+        <p th:if="(${authority}=='[ADMIN]')" th:text="${el.id}"></p>
+        <p th:text="${el.itemName}"/>
+<!--        <p th:text="${el.id}"/>-->
+        <p th:text="'Цена: '+${el.price}+'р'"/>
+        <p>Выберите размер:</p>
+        <form th:method="POST" th:action="@{/page/{id}(id=${el.id})}">
+            <!--<input type="number" name="itemSize"/>-->
+            <select th:if="(${el.typeId}==1)"  name="itemSize">
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <select th:if="(${el.typeId}==2)"  name="itemSize">
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <select th:if="(${el.typeId}==3)"  name="itemSize">
+                <option value="0">One size</option>
+            </select>
+            <select th:if="${el.typeId}==4"  name="itemSize">
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+            </select>
+            <select th:if="(${el.typeId}==5)"  name="itemSize">
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <select th:if="(${el.typeId}==6)"  name="itemSize">
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <button type="submit">Добавить в корзину</button>
+        </form>
+
+        <form th:method="POST" th:action="@{/favorites/{id}(id=${el.id})}">
+            <button type="submit">Добавить в избранное</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

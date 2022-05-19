@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Избранное</title>
+    <link th:href="@{css/style.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:insert="blocks/general.html :: header0">
+</div>
+<!--<p class="basketlist">ВАШИ ИЗБРАННЫЕ:</p>-->
+<!--<div class="basket_container">-->
+<!--    <div th:each="favorite : ${favorites}" class="basket_card">-->
+<!--        <div class="basket_buttons">-->
+<!--            <form th:method="POST" th:action="@{/favoritesDeleteAdd}">-->
+<!--                <button name="delButton" th:value="${favorite.getId}">X</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <img th:src="${clothesService.getItemById(favorite.getItemId()).getCoverLink()}" onerror="this.src='img/no-cover.gif'" height="300px" width="200px">-->
+<!--        <p th:text="${clothesService.getItemById(favorite.getItemId()).getItemName()}"/>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+<p class="basketlist">ВАШИ ИЗБРАННЫЕ:</p>
+<div class="favs_container">
+    <div th:each="favorite : ${favorites}" class="item_card">
+        <img th:src="${clothesService.getItemById(favorite.getItemId()).getCoverLink()}" onerror="this.src='img/no-cover.gif'" height="300px" width="200px">
+        <p th:text="${clothesService.getItemById(favorite.getItemId()).getItemName()}"/>
+        <form th:method="POST" th:action="@{/favoritesDeleteAdd}">
+            <button name="delButton" th:value="${favorite.getId}">X</button>
+        </form>
+        <p th:text="'Цена: '+${clothesService.getItemById(favorite.getItemId()).price}+'р'"/>
+        <p>Выберите размер:</p>
+        <form th:method="POST" th:action="@{/page/{id}(id=${clothesService.getItemById(favorite.getItemId()).id})}">
+            <select th:if="(${clothesService.getItemById(favorite.getItemId()).typeId}==1)"  name="itemSize">
+                <option value="40">44</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <select th:if="(${clothesService.getItemById(favorite.getItemId()).typeId}==2)"  name="itemSize">
+                <option value="40">44</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <select th:if="(${clothesService.getItemById(favorite.getItemId()).typeId}==3)"  name="itemSize">
+                <option value="0">One size</option>
+            </select>
+            <select th:if="${clothesService.getItemById(favorite.getItemId()).typeId}==4"  name="itemSize">
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+            </select>
+            <select th:if="(${clothesService.getItemById(favorite.getItemId()).typeId}==5)"  name="itemSize">
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <select th:if="(${clothesService.getItemById(favorite.getItemId()).typeId}==6)"  name="itemSize">
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+                <option value="48">48</option>
+                <option value="50">50</option>
+                <option value="52">52</option>
+            </select>
+            <button type="submit">Добавить в корзину</button>
+        </form>
+    </div>
+
+</div>
+
+
+</body>
+</html>
